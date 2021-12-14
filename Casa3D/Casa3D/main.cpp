@@ -12,27 +12,31 @@ void reshape(int w, int h);
 #define VERDE    0.0, 1.0, 0.0
 #define CYAN     1.0, 0.0, 1.0
 #define LARANJA  0.8, 0.6, 0.1
-#define ROSEO    0.7, 0.1, 0.6
 #define CINZA    0.6, 0.6, 0.6
 
 static GLfloat vertices[27] = {
-  0.0,  30.0, 30.0, /* 0 */
-  30.0, 30.0, 30.0, /* 1 */
-  30.0, 0.0, 30.0, /* 2 */
-  0.0,  0.0, 30.0, /* 3 */
-  0.0,  30.0, 0.0, /* 4 */
-  30.0,  30.0,  0.0, /* 5 */
-  30.0, 0.0,  0.0, /* 6 */
-  0.0,  0.0,  0.0, /* 7 */
-  15.0,   45.0,  15.0, /* 8 */
+   0.0, 30.0, 30.0,    /* 0 */
+  30.0, 30.0, 30.0,    /* 1 */
+  30.0,  0.0, 30.0,    /* 2 */
+   0.0,  0.0, 30.0,    /* 3 */
+   0.0, 30.0,  0.0,    /* 4 */
+  30.0, 30.0,  0.0,    /* 5 */
+  30.0,  0.0,  0.0,    /* 6 */
+   0.0,  0.0,  0.0,    /* 7 */
+  15.0, 45.0, 15.0,    /* 8 */
 };
 
-static GLubyte frenteIndices[] = {0,3,2,1};
-static GLubyte trasIndices[] = {5,6,7,4};
+static GLubyte frenteIndices[] =   {0,3,2,1};
+static GLubyte trasIndices[] =     {5,6,7,4};
 static GLubyte esquerdaIndices[] = {4,7,3,0};
-static GLubyte direitaIndices[] = {1,2,6,5};
-static GLubyte topoIndices[] = {4,0,1,5};
-static GLubyte fundoIndices[] = {6,2,3,7};
+static GLubyte direitaIndices[] =  {1,2,6,5};
+static GLubyte topoIndices[] =     {4,0,1,5};
+static GLubyte fundoIndices[] =    {6,2,3,7};
+
+static GLubyte telhadoFrente[] =   {1,8,0,0};
+static GLubyte telhadoEsquerda[] = {1,5,8,0};
+static GLubyte telhadoDireita[] =  {5,4,8,0};
+static GLubyte telhadoTras[] =     {4,0,8,0};
 
 static int eixoy, eixox;
 int largura, altura;
@@ -73,6 +77,8 @@ void display(void) {
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, vertices);
 
+    // LADOS DO QUADRADO
+
     glColor3f(AZUL); /* frente */
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, frenteIndices);
 
@@ -90,6 +96,20 @@ void display(void) {
 
     glColor3f(LARANJA); /* fundo */
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, fundoIndices);
+
+    // LADOS DO TELHADO
+
+    glColor3f(CINZA); /* frente */
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, telhadoFrente);
+
+    glColor3f(CINZA); /* esquerda */
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, telhadoEsquerda);
+
+    glColor3f(CINZA); /* direita */
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, telhadoDireita);
+
+    glColor3f(CINZA); /* tras */
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, telhadoTras);
 
     glDisableClientState(GL_VERTEX_ARRAY);
 
