@@ -1,4 +1,2 @@
 ﻿  main.cpp
-C:\Users\bruna\OneDrive\Área de Trabalho\Documentos\UFAL\Computação Gráfica\Casa3D\Casa3D\main.cpp(43,9): warning C4101: 'i': variável local não referenciada
 LINK : fatal error LNK1104: não é possível abrir o arquivo 'glut32.lib'
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1087,5): error MSB6006: "link.exe" foi encerrado com o código 1104.

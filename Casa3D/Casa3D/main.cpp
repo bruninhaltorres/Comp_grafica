@@ -15,37 +15,35 @@ void reshape(int w, int h);
 #define ROSEO    0.7, 0.1, 0.6
 #define CINZA    0.6, 0.6, 0.6
 
-static GLfloat vertices[30] = {
+static GLfloat vertices[27] = {
   0.0,  30.0, 30.0, /* 0 */
-  20.0, 30.0, 30.0, /* 1 */
-  30.0, 20.0, 30.0, /* 2 */
-  30.0,  0.0, 30.0, /* 3 */
-  0.0,   0.0, 30.0, /* 4 */
-  0.0,  30.0,  0.0, /* 5 */
-  30.0, 30.0,  0.0, /* 6 */
-  30.0,  0.0,  0.0, /* 7 */
-  0.0,   0.0,  0.0, /* 8 */
-  30.0, 30.0, 20.0  /* 9 */
+  30.0, 30.0, 30.0, /* 1 */
+  30.0, 0.0, 30.0, /* 2 */
+  0.0,  0.0, 30.0, /* 3 */
+  0.0,  30.0, 0.0, /* 4 */
+  30.0,  30.0,  0.0, /* 5 */
+  30.0, 0.0,  0.0, /* 6 */
+  0.0,  0.0,  0.0, /* 7 */
+  15.0,   45.0,  15.0, /* 8 */
 };
 
-static GLubyte frenteIndices[] = { 0,4,3,2,1 };
-static GLubyte trasIndices[] = { 5,6,7,8 };
-static GLubyte esquerdaIndices[] = { 0,5,8,4 };
-static GLubyte direitaIndices[] = { 2,3,7,6,9 };
-static GLubyte topoIndices[] = { 0,1,9,6,5 };
-static GLubyte fundoIndices[] = { 3,4,8,7 };
-static GLubyte trianguloIndices[] = { 1,2,9 };
+static GLubyte frenteIndices[] = {0,3,2,1};
+static GLubyte trasIndices[] = {5,6,7,4};
+static GLubyte esquerdaIndices[] = {4,7,3,0};
+static GLubyte direitaIndices[] = {1,2,6,5};
+static GLubyte topoIndices[] = {4,0,1,5};
+static GLubyte fundoIndices[] = {6,2,3,7};
 
 static int eixoy, eixox;
 int largura, altura;
 
 int main(int argc, char** argv) {
-    int i;
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-    glutInitWindowSize(256, 256);
+    glutInitWindowSize(800, 800);
     glutInitWindowPosition(100, 100);
-    glutCreateWindow(argv[0]);
+    glutCreateWindow("Casa 3D");
+
     init();
     glutDisplayFunc(display);
     glutKeyboardFunc(keyboard);
@@ -69,33 +67,29 @@ void reshape(int w, int h) {
 
 void display(void) {
     glPushMatrix();
-    glRotatef((GLfloat)eixoy, 0.0, 1.0, 0.0);
-    glRotatef((GLfloat)eixox, 1.0, 0.0, 0.0);
+    glRotatef((GLfloat) eixoy, 0.0, 1.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, vertices);
 
     glColor3f(AZUL); /* frente */
-    glDrawElements(GL_POLYGON, 5, GL_UNSIGNED_BYTE, frenteIndices);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, frenteIndices);
 
     glColor3f(AMARELO); /* esquerda */
-    glDrawElements(GL_POLYGON, 4, GL_UNSIGNED_BYTE, esquerdaIndices);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, esquerdaIndices);
 
     glColor3f(VERMELHO); /* tras */
-    glDrawElements(GL_POLYGON, 4, GL_UNSIGNED_BYTE, trasIndices);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, trasIndices);
 
     glColor3f(VERDE); /* direita */
-    glDrawElements(GL_POLYGON, 5, GL_UNSIGNED_BYTE, direitaIndices);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, direitaIndices);
 
     glColor3f(CYAN); /* topo */
-    glDrawElements(GL_POLYGON, 5, GL_UNSIGNED_BYTE, topoIndices);
+    glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, topoIndices);
 
     glColor3f(LARANJA); /* fundo */
     glDrawElements(GL_QUADS, 4, GL_UNSIGNED_BYTE, fundoIndices);
-
-    glColor3f(CINZA); /* triangulo */
-    glDrawElements(GL_POLYGON, 3, GL_UNSIGNED_BYTE, trianguloIndices);
 
     glDisableClientState(GL_VERTEX_ARRAY);
 
@@ -105,37 +99,8 @@ void display(void) {
 
 void keyboard(unsigned char key, int x, int y) {
     switch (key) {
-    case 27:
-        exit(0);
-        break;
-    case 'a':
-        //print("%d, %d\n", x, y);
-        break;
-    case 'y':
+    case 'r':
         eixoy = (eixoy + 5) % 360;
-        glutPostRedisplay();
-        break;
-    case 'Y':
-        eixoy = (eixoy - 5) % 360;
-        glutPostRedisplay();
-        break;
-    case 'x':
-        eixox = (eixox + 5) % 360;
-        glutPostRedisplay();
-        break;
-    case 'X':
-        eixox = (eixox - 5) % 360;
-        glutPostRedisplay();
-        break;
-    case 'p':
-        glLoadIdentity();
-        gluPerspective(65.0, (GLfloat)largura / (GLfloat)altura, 20.0, 120.0);
-        gluLookAt(0, 0, -90, 0, 0, 0, 0, 1, 0);
-        glutPostRedisplay();
-        break;
-    case 'o':
-        glLoadIdentity();
-        glOrtho(-50, 50, -50, 50, -50, 50);
         glutPostRedisplay();
         break;
     }
