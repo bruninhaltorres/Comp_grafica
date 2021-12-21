@@ -5,6 +5,11 @@
       "ProjectGuid": "ae5c20d5-d20a-4984-97e2-7289b9c82480",
       "DisplayName": "flor",
       "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Arquivos Diversos",
+      "ColorIndex": -1
     }
   },
   "NextColorIndex": 1
