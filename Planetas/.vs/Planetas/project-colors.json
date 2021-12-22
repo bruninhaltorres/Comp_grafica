@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "2d13cf2a-6e83-4f67-9f53-9812ba42b429": {
+      "ProjectGuid": "2d13cf2a-6e83-4f67-9f53-9812ba42b429",
+      "DisplayName": "Planetas",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
