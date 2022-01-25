@@ -20,6 +20,35 @@
 int frame = 0;
 double velocidade = 1.0;
 
+void setup_lighting() {
+    float mat_specular[] = {1.0f, 1.0f, 1.0f};
+	float mat_shininess[] = {50.0f};
+	float light_position[] = {0.0f, 65.0f, 0.0f, 1.0f};
+    float light_diffuse [] = {1.0f , 1.0f , 1.0f }; // Luz branca
+
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+
+    //spot : ponto luminoso
+    float spot_direction [] = {-0.7f , -0.3f , 0.0f };
+    float spot_cutoff [] = {15.0f }; // Ângulo de dispersão da luz
+    float spot_specular[] = {1.0f, 1.0f, 0.0f}; // Amarelo
+    float spot_position[] = {20 , 25 , -61, 1.0 };
+    float spot_difuse[] = {1.0, 1.0, 0.0};
+
+    glMaterialfv(GL_LIGHT0 , GL_SPECULAR , spot_specular);
+    glLightfv ( GL_LIGHT0 , GL_DIFFUSE , spot_difuse ) ;
+
+    glLightfv(GL_LIGHT0, GL_POSITION, spot_position);
+    glLightfv ( GL_LIGHT0 , GL_SPOT_DIRECTION , spot_direction ) ;
+    glLightfv ( GL_LIGHT0 , GL_SPOT_CUTOFF , spot_cutoff ) ;
+	
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
+    
+    glEnable(GL_COLOR_MATERIAL);
+}
+
 void reshape(int w, int h) {
 
     glViewport(0, 0, w, h);
@@ -151,6 +180,14 @@ void init() {
     glEnable(GL_COLOR_MATERIAL);
     glShadeModel(GL_SMOOTH);
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+    glDepthMask(GL_TRUE);
+    glDepthFunc(GL_LEQUAL);
+    glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+    glDepthRange(0.0f, 1.0f);
+
+    setup_lighting();
 } 
 
 int main(int argc, char** argv) {
